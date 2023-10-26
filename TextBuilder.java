@@ -1,10 +1,10 @@
 import java.util.HashMap;
 
-public class TextBuilder {
-    HashMap<String, Ngram> h;
+public class TextBuilder<T> {
+    HashMap<String, Ngram<T>> h;
     String built;
 
-    public TextBuilder(HashMap<String, Ngram> h) {
+    public TextBuilder(HashMap<String, Ngram<T>> h) {
         this.h = h;
         built = "";
 
@@ -19,8 +19,8 @@ public class TextBuilder {
                 h);
     }
 
-    public static Ngram getNextNgram(String ngramSubstring, double noise, HashMap<String, Ngram> h) {
-        Ngram ngram = null;
+    public  Ngram<T> getNextNgram(String ngramSubstring, double noise, HashMap<String, Ngram<T>> h) {
+        Ngram<T> ngram = null;
         while (ngram == null && ngramSubstring.length() > 0) {
             if (Math.random() < noise * ((2 * ngramSubstring.length()) - 1)) {
                 continue;
@@ -31,10 +31,11 @@ public class TextBuilder {
             }
             ngramSubstring = ngramSubstring.substring(1);
         }
+        System.out.println();
         return h.get("\n");
     }
 
-    public static char getNextCharacter(String ngramSubstring, double noise, HashMap<String, Ngram> h) {
+    public T getNextCharacter(String ngramSubstring, double noise, HashMap<String, Ngram<T>> h) {
         return getNextNgram(ngramSubstring, noise, h).getRand();
     }
 

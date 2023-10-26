@@ -16,14 +16,15 @@ public class Driver {
 
         int n = 9;
 
-        TextBuilder t = new TextBuilder(Weightings.generateNgramsUpToOrder(text, n));
+        // TextBuilder<Character> t = new TextBuilder<Character>(new CharacterMap(text, n).generateNgramsUpToOrder());
+        TextBuilder<String> t = new TextBuilder<String>(new WordMap(text, n).generateNgramsUpToOrder());
 
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 200; i++) {
             t.generateNext();
         }
 
         BufferedWriter bw = new BufferedWriter(
-                new FileWriter("./output/" + infileName + "-" + System.currentTimeMillis() + ".txt"));
+                new FileWriter("./output/word/" + infileName + "-" + System.currentTimeMillis() + ".txt"));
         bw.write(t.getBuilt());
         bw.close();
 

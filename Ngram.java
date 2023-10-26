@@ -1,19 +1,19 @@
 import java.util.HashMap;
 
-public class Ngram {
+public class Ngram<T> {
     int n;
     String first;
-    HashMap<Character, Integer> lasts;
-    Weightings weighter;
+    HashMap<T, Integer> lasts;
+    Weightings<T> weighter;
 
     public Ngram(String first) {
         n = first.length() + 1;
         this.first = first;
-        lasts = new HashMap<Character, Integer>();
-        weighter = new Weightings(lasts);
+        lasts = new HashMap<T, Integer>();
+        weighter = new Weightings<T>(lasts);
     }
 
-    public int add(char c) {
+    public int add(T c) {
         if (lasts.get(c) == null) {
             lasts.put(c, 1);
             weighter.updateTotal();
@@ -24,7 +24,7 @@ public class Ngram {
         return lasts.get(c);
     }
 
-    public char getRand() {
+    public T getRand() {
         return weighter.rand();
     }
 
